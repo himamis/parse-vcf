@@ -12,8 +12,10 @@
 
 namespace parsevcf {
 
-const std::string& id;
-const std::string& description;
+struct FilterField {
+	const std::string& id;
+	const std::string& description;
+};
 
 } // namespace parsevcf
 
