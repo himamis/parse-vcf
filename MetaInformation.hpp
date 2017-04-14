@@ -38,11 +38,11 @@ enum InfoType {
 };
 
 struct InfoField {
-	InfoField(const std::string& id, const InfoType type, const number_t number, const std::string& description):
+	/*InfoField(const std::string& id, const InfoType type, const number_t number, const std::string& description):
 	id(id), type(type), number(number), description(description) {
 		source = 0;
 		version = 0;
-	}
+	}*/
 	const std::string& id;
 	const InfoType type;
 	const number_t number;
@@ -82,6 +82,15 @@ struct AltField {
 	const std::string& description;
 };
 
+// Contig field
+////////////////
+
+struct ContigField {
+	const std::string& id;
+	const unsigned long length;
+	const std::string* md5_checksum;
+	const std::string* url;
+};
 
 } // namespace parsevcf
 
