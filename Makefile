@@ -11,3 +11,6 @@ parsevcf: $(OBJS)
 # Get a .o from a .cpp by calling compiler with cflags and includes (if defined)
 .cpp.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+	
+clean:
+	rm -f *.o
