@@ -5,7 +5,7 @@
  *      Author: balazs
  */
 
-#include "InfoField.hpp"
+#include "MetaInformation.hpp"
 
 using namespace parsevcf;
 
