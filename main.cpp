@@ -10,8 +10,7 @@
 using namespace parsevcf;
 
 int main(int argc, char **argv) {
-
-	parsevcf::InfoField field("csa", kInteger, kGenotype, "description");
+	parsevcf::InfoField field("ID", kIntegerInfoType, kGenotypeNumber, "Description");
 	return 0;
 }
 

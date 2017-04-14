@@ -8,6 +8,8 @@
 #ifndef METAINFORMATION_HPP_
 #define METAINFORMATION_HPP_
 
+#include <string>
+
 namespace parsevcf {
 
 // Number type
@@ -16,23 +18,23 @@ namespace parsevcf {
 typedef int number_t;
 
 // If the field has one value per alternate allele (A)
-const number_t kAlternate = -1;
+const number_t kAlternateNumber = -1;
 // If the field has one value for each possible allele (including the reference) (R)
-const number_t kReference = -2;
+const number_t kReferenceNumber = -2;
 // If the field has one value for each possible genotype (more relevant to the FORMAT tags) (G)
-const number_t kGenotype = -3;
+const number_t kGenotypeNumber = -3;
 // If the number of possible values varies, is unknown, or is unbounded (.)
-const number_t kUnknown = -4;
+const number_t kUnknownNumber = -4;
 
 // Info field
 ///////////////
 
 enum InfoType {
-	kInteger,
-	kFloat,
-	kFlag,
-	kCharacter,
-	kString
+	kIntegerInfoType,
+	kFloatInfoType,
+	kFlagInfoType,
+	kCharacterInfoType,
+	kStringInfoType
 };
 
 struct InfoField {
@@ -53,10 +55,10 @@ struct InfoField {
 ////////////////
 
 enum FormatType {
-	kInteger,
-	kFloat,
-	kCharacter,
-	kString
+	kIntegerFormatType,
+	kFloatFormatType,
+	kCharacterFormatType,
+	kStringFormatType
 };
 
 struct FormatField {
