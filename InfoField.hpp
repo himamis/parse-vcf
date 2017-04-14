@@ -32,12 +32,17 @@ const number_t kGenotype = -3;
 const number_t kUnknown = -4;
 
 struct InfoField {
+	InfoField(const std::string& id, const InfoType type, const number_t number, const std::string& description):
+	id(id), type(type), number(number), description(description) {
+		source = 0;
+		version = 0;
+	}
 	const std::string& id;
 	const InfoType type;
 	const number_t number;
 	const std::string& description;
-	const std::string& source;
-	const std::string& version;
+	const std::string* source;
+	const std::string* version;
 };
 
 } // namespace parsevcf
