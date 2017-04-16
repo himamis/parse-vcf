@@ -5,10 +5,12 @@
  *      Author: balazs
  */
 
-#ifndef METAINFORMATION_HPP_
-#define METAINFORMATION_HPP_
+#ifndef METAINFORMATION_H_
+#define METAINFORMATION_H_
 
 #include <string>
+#include <vector>
+#include <map>
 
 namespace parsevcf {
 
@@ -38,11 +40,6 @@ enum InfoType {
 };
 
 struct InfoField {
-	/*InfoField(const std::string& id, const InfoType type, const number_t number, const std::string& description):
-	id(id), type(type), number(number), description(description) {
-		source = 0;
-		version = 0;
-	}*/
 	const std::string& id;
 	const InfoType type;
 	const number_t number;
@@ -76,8 +73,10 @@ struct FilterField {
 	const std::string& description;
 };
 
-struct AltField {
+// Alt field
+////////////////
 
+struct AltField {
 	const std::string& id;
 	const std::string& description;
 };
@@ -92,8 +91,34 @@ struct ContigField {
 	const std::string* url;
 };
 
-} // namespace parsevcf
+// Meta and Sample fields
+/////////////////////////
 
+typedef FormatType MetaType;
 
+struct MetaField {
+	const std::string& id;
+	const MetaType type;
+	const number_t number;
+	const std::vector<const std::string&>& values;
+};
 
-#endif /* METAINFORMATION_HPP_ */
+struct SampleField {
+	const std::string& id;
+	const std::map<MetaField*, const std::string&> values;
+};
+
+// Pedigree field
+//////////////////
+
+struct PedigreeField {
+	const std::string& id;
+	// length 1 corresponds to original
+	// length 2 corresponds to mother and father
+	// length >2 corresponds to the i-th ancestor
+	const std::vector<const std::string&>& names;
+};
+
+} /* namespace parsevcf */
+
+#endif /* METAINFORMATION_H_ */

@@ -1,5 +1,5 @@
 CC=g++
-SOURCES = main.cpp
+SOURCES = main.cpp DefaultHandler.cpp VCFParser.cpp parser.cpp lexer.cpp
 OBJS = $(SOURCES:.cpp=.o)
 
 all: parsevcf
@@ -10,7 +10,7 @@ parsevcf: $(OBJS)
 
 # Get a .o from a .cpp by calling compiler with cflags and includes (if defined)
 .cpp.o:
-	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+	$(CC) $(CFLAGS) $(INCLUDES) -g -O0  -c $<
 	
 clean:
 	rm -f *.o
