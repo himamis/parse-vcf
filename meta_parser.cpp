@@ -1,5 +1,5 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
-#include "meta_tokenizer.h"
+#include "meta_parser.h"
 
 using namespace std;
 
