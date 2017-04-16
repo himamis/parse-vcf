@@ -1,10 +1,3 @@
-/*
- * parser.h
- *
- *  Created on: 16 Apr 2017
- *      Author: balazs
- */
-
 #ifndef PARSER_H_
 #define PARSER_H_
 

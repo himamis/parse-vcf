@@ -5,7 +5,6 @@
 
 namespace parsevcf {
 
-
 bool header(lexer& input);
 
 bool entries(lexer& input);

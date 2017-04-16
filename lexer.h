@@ -1,10 +1,3 @@
-/*
- * lexer.h
- *
- *  Created on: 16 Apr 2017
- *      Author: balazs
- */
-
 #ifndef LEXER_H_
 #define LEXER_H_
 
@@ -44,7 +37,7 @@ bool next_string_until_newline(lexer& input, std::string& output);
 
 // Helper macros
 /////////////////
-// TODO
+
 #define rule_character(lexer, character) if (!next_character(lexer, character)) { \
 	error_missing(lexer, #character); \
 	return false; \
@@ -67,8 +60,6 @@ bool next_string_until_newline(lexer& input, std::string& output);
 #define first_rule(rule, lexer, args...) if (!rule(lexer, ##args)) { \
 	return false; \
 }
-
-#define create_rule(name, helper, lexer) if ()
 
 } /* namespace parsevcf */
 

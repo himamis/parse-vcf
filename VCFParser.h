@@ -1,10 +1,3 @@
-/*
- * VCFParser.h
- *
- *  Created on: 15 Apr 2017
- *      Author: balazs
- */
-
 #ifndef VCFPARSER_H_
 #define VCFPARSER_H_
 

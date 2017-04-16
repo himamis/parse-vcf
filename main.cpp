@@ -1,10 +1,3 @@
-/*
- * main.cpp
- *
- *  Created on: 14 Apr 2017
- *      Author: balazs
- */
-
 #include "MetaInformation.h"
 #include "VCFParser.h"
 #include "DefaultHandler.h"

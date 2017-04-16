@@ -1,10 +1,3 @@
-/*
- * VCFParser.cpp
- *
- *  Created on: 15 Apr 2017
- *      Author: balazs
- */
-
 #include <sstream>
 #include <string>
 

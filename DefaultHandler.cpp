@@ -1,10 +1,3 @@
-/*
- * DefaultHandler.cpp
- *
- *  Created on: 14 Apr 2017
- *      Author: balazs
- */
-
 #include "DefaultHandler.h"
 
 namespace parsevcf {

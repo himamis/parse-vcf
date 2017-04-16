@@ -1,10 +1,3 @@
-/*
- * parser.cpp
- *
- *  Created on: 16 Apr 2017
- *      Author: balazs
- */
-
 #include "parser.h"
 #include "meta_parser.h"
 #include "entries_parser.h"

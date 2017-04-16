@@ -1,10 +1,3 @@
-/*
- * Sample.hpp
- *
- *  Created on: 14 Apr 2017
- *      Author: balazs
- */
-
 #ifndef SNVENTRY_H_
 #define SNVENTRY_H_
 

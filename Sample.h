@@ -1,10 +1,3 @@
-/*
- * Sample.hpp
- *
- *  Created on: 15 Apr 2017
- *      Author: balazs
- */
-
 #ifndef SAMPLE_H_
 #define SAMPLE_H_
 

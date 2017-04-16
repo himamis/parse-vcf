@@ -1,10 +1,3 @@
-/*
- * parser.c
- *
- *  Created on: 16 Apr 2017
- *      Author: balazs
- */
-
 #include "meta_parser.h"
 
 using namespace std;

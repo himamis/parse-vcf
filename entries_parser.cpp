@@ -1,10 +1,3 @@
-/*
- * entries_parser.cpp
- *
- *  Created on: 16 Apr 2017
- *      Author: balazs
- */
-
 #include "entries_parser.h"
 
 using namespace std;

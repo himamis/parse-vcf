@@ -1,10 +1,3 @@
-/*
- * MetaInformation.hpp
- *
- *  Created on: 14 Apr 2017
- *      Author: balazs
- */
-
 #ifndef METAINFORMATION_H_
 #define METAINFORMATION_H_
 
