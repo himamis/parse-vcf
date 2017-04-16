@@ -1,5 +1,5 @@
 CC=g++
-SOURCES = main.cpp DefaultHandler.cpp VCFParser.cpp parser.cpp lexer.cpp
+SOURCES = main.cpp DefaultHandler.cpp VCFParser.cpp meta_parser.cpp entries_parser.cpp lexer.cpp parser.cpp
 OBJS = $(SOURCES:.cpp=.o)
 
 all: parsevcf

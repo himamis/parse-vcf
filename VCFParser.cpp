@@ -9,21 +9,19 @@
 #include <string>
 
 #include "VCFParser.h"
-#include "lexer.h"
-#include "meta_parser.h"
+#include "parser.h"
 
 using namespace std;
 
 namespace parsevcf {
 
 VCFParser::VCFParser(std::ifstream& input, const DefaultHandler& handler) :
-		_input(input), _handler(handler), _state(kMeta) { }
+		_input(input), _handler(handler) { }
 
 VCFParser::~VCFParser() { }
 
 void VCFParser::parse() {
-	lexer lex = lexer(_input);
-	if (metaInformation(lex)) {
+	if (parsevcf::parse(_input)) {
 		printf("%s", "All good man.\n");
 	} else {
 		printf("%s", "Whoa, something is wrong\n");

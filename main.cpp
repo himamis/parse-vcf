@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
 	};
 
 	std::ifstream input;
+	//input.open("../../../Downloads/CEU.low_coverage.2010_09.genotypes.vcf", std::ifstream::in);
 	input.open("test1.vcf", std::ifstream::in);
 	DefaultHandler handler;
 
