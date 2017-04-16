@@ -1,6 +1,5 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
 #include "entries_parser.h"
-#include <iostream>
 
 using namespace std;
 
@@ -31,19 +30,19 @@ bool hashtag(lexer& input) {
 	return next_character(input, '#');
 }
 
-bool sample_name(lexer& input, string& sample) {
+bool sampleName(lexer& input, string& sample) {
 	return next_string_until_one_of(input, sample, "\t\n");
 }
 
-bool sample_names(lexer& input) {
+bool sampleNames(lexer& input) {
 	first_rule(next_string, input, kFormat)
 	rule(tab, input)
 
 	string sample;
-	rule(sample_name, input, sample)
+	rule(sampleName, input, sample)
 
 	while (tab(input)) {
-		rule(sample_name, input, sample)
+		rule(sampleName, input, sample)
 	}
 	return true;
 }
@@ -67,8 +66,8 @@ bool header(lexer& input) {
 	rule(tab, input)
 	rule_string(kInfo, input);
 
-	if (next_character(input, '\t')) {
-		rule(sample_names, input)
+	if (eat('\t', input)) {
+		rule(sampleNames, input)
 	}
 
 	rule(next_line, input)
@@ -155,7 +154,6 @@ bool infoValue(lexer& input) {
 	if (!next_string_until_one_of(input, value, "\t;")) {
 		return false;
 	}
-	cout << value << endl;
 	return true;
 }
 
@@ -164,7 +162,6 @@ bool infoKey(lexer& input) {
 	if (!next_string_until_one_of(input, key, "=\t;")) {
 		return false;
 	}
-	cout << key << endl;
 	return true;
 }
 
@@ -193,8 +190,49 @@ bool info(lexer& input) {
 	return true;
 }
 
+bool formatEntry(lexer& input) {
+	string format;
+	if (!next_string_until_one_of(input, format, "\t:")) {
+		return false;
+	}
+	return true;
+}
+
+bool format(lexer& input) {
+	first_rule(formatEntry, input)
+	while (eat(':', input)) {
+		rule(formatEntry, input)
+	}
+	return true;
+}
+
+bool sampleValue(lexer& input) {
+	string entry;
+	if (!next_string_until_one_of(input, entry, "\t\n:")) {
+		return false;
+	}
+	return true;
+}
+
+bool sampleValues(lexer& input) {
+	first_rule(sampleValue, input)
+	while (eat(':', input)) {
+		rule(sampleValue, input)
+	}
+	return true;
+}
+
+bool sampleEntries(lexer& input) {
+	first_rule(sampleValues, input)
+	while(eat('\t', input)) {
+		rule(sampleValues, input)
+	}
+	return true;
+}
+
 bool entry(lexer& input) {
 	first_rule(chrom, input)
+
 	rule(tab, input)
 	rule(pos, input)
 	rule(tab, input)
@@ -209,6 +247,12 @@ bool entry(lexer& input) {
 	rule(filter, input)
 	rule(tab, input)
 	rule(info, input)
+
+	if (eat('\t', input)) {
+		rule(format, input)
+		rule(tab, input)
+		rule(sampleEntries, input)
+	}
 
 	return true;
 }
