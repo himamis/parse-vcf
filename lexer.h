@@ -62,6 +62,8 @@ bool next_string_until_newline(lexer& input, std::string& output);
 	return false; \
 }
 
+#define eat(character, input) next_character(input, character)
+
 } /* namespace parsevcf */
 
 #endif /* LEXER_H_ */
