@@ -9,6 +9,8 @@
 
 using namespace std;
 
+namespace parsevcf {
+
 bool header(lexer& input) {
 	string header;
 	//if (!next_string_until_char(lexer, header, '\t')) {
@@ -19,3 +21,5 @@ bool header(lexer& input) {
 bool entries(lexer& input) {
 
 }
+
+} /* namespace parsevcf */

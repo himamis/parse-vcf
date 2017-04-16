@@ -10,7 +10,10 @@
 
 #include "lexer.h"
 
+namespace parsevcf {
+
 bool metaInformation(lexer& input);
 
+} /* namespace parsevcf */
 
 #endif /* META_PARSER_H_ */

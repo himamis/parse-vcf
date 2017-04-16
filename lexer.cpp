@@ -2,6 +2,8 @@
 
 using namespace std;
 
+namespace parsevcf {
+
 bool next_line(lexer& input) {
 	if (input.pos == input.current_line.length()) {
 		getline(input.stream, input.current_line);
@@ -51,3 +53,5 @@ bool next_string_until_char(lexer& input, string& output, const char& match) {
 	}
 	return false;
 }
+
+} /* namespace parsevcf */

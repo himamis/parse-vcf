@@ -11,6 +11,8 @@
 
 using namespace std;
 
+namespace parsevcf {
+
 static const string unknown = "unknown value";
 
 void error(const string& message) {
@@ -169,3 +171,6 @@ bool metaInformation(lexer& input) {
 	do {} while (metaEntry(input));
 	return true;
 }
+
+} /* namespace parsevcf */
+

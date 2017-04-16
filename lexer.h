@@ -10,6 +10,8 @@
 
 #include <istream>
 
+namespace parsevcf {
+
 struct lexer {
 	lexer(std::istream& stream) : stream(stream), pos(0) {
 		std::getline(stream, current_line);
@@ -28,5 +30,7 @@ bool next_string_until_one_of(lexer& input, std::string& output, const std::stri
 bool next_string_until_char(lexer& input, std::string& output, const char& match);
 
 bool next_string_until_newline(lexer& input, std::string& output);
+
+} /* namespace parsevcf */
 
 #endif /* LEXER_H_ */
