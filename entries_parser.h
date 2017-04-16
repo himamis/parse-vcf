@@ -1,3 +1,4 @@
+/* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
 #ifndef ENTRIES_PARSER_H_
 #define ENTRIES_PARSER_H_
 
