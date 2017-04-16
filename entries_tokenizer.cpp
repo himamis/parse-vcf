@@ -1,5 +1,5 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
-#include "entries_parser.h"
+#include "entries_tokernizer.h"
 
 using namespace std;
 

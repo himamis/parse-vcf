@@ -1,7 +1,8 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
 #include "parser.h"
-#include "meta_parser.h"
-#include "entries_parser.h"
+
+#include "entries_tokernizer.h"
+#include "meta_tokenizer.h"
 
 namespace parsevcf {
 
