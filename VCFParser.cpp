@@ -22,5 +22,4 @@ void VCFParser::parse() {
 	}
 }
 
-
 } /* namespace parsevcf */
