@@ -41,11 +41,8 @@ bool quoted_string(lexer& input, string& ret) {
 }
 
 bool metaKey(lexer& input) {
-	// anything until equals sign
-	static const string until = "=";
-
 	string ret;
-	return next_string_until_one_of(input, ret, until);
+	return next_string_until_char(input, ret, '=');
 }
 
 bool metaPrefix(lexer& input) {
