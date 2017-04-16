@@ -49,34 +49,27 @@ bool sample_names(lexer& input) {
 bool header(lexer& input) {
 	first_rule(hashtag, input)
 
-
-	STRING(input, kChrom);
+	rule_string(kChrom, input);
 	rule(tab, input)
-	STRING(input, kPos);
+	rule_string(kPos, input);
 	rule(tab, input)
-	STRING(input, kId);
+	rule_string(kId, input);
 	rule(tab, input)
-	STRING(input, kRef);
+	rule_string(kRef, input);
 	rule(tab, input)
-	STRING(input, kAlt);
+	rule_string(kAlt, input);
 	rule(tab, input)
-	STRING(input, kQual);
+	rule_string(kQual, input);
 	rule(tab, input)
-	STRING(input, kFilter);
+	rule_string(kFilter, input);
 	rule(tab, input)
-	STRING(input, kInfo);
+	rule_string(kInfo, input);
 
 	if (next_character(input, '\t')) {
-		if (!sample_names(input)) {
-			error_missing(input, "expecting sample names");
-			return false;
-		}
+		rule(sample_names, input)
 	}
 
-	if (!next_line(input)) {
-		error_missing(input, "newline");
-		return false;
-	}
+	rule(next_line, input)
 	return true;
 }
 

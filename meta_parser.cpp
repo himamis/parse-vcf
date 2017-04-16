@@ -23,18 +23,26 @@ bool comma(lexer& input) {
 	return next_character(input, ',');
 }
 
+bool quotemarks(lexer& input) {
+	return next_character(input, '"');
+}
+
+bool langle(lexer& input) {
+	return next_character(input, '<');
+}
+
+bool rangle(lexer& input) {
+	return next_character(input, '>');
+}
+
 bool quoted_string(lexer& input, string& ret) {
-	if (!next_character(input, '"')) {
-		return false;
-	}
+	first_rule(quotemarks, input)
+
 	if (!next_string_until_char(input, ret, '"')) {
 		error_missing(input, "\"");
 		return false;
 	}
-	if (!next_character(input, '"')) {
-		error_missing(input, "\"");
-		return false;
-	}
+	rule(quotemarks, input)
 	return true;
 }
 
@@ -47,8 +55,7 @@ bool metaKey(lexer& input) {
 }
 
 bool metaPrefix(lexer& input) {
-	// ##
-	return next_string(input, "##");
+	return next_string(input, "##"); // ##
 }
 
 bool metaValueListKey(lexer& input) {
@@ -70,34 +77,21 @@ bool metaValueListValue(lexer& input) {
 }
 
 bool metaValueListEntry(lexer& input) {
-	if (!metaValueListKey(input)) {
-		return false;
-	}
-	if (!equals(input)) {
-		error_missing(input, "=");
-		return false;
-	}
-	if (!metaValueListValue(input)) {
-		error_missing(input, "meta value list value");
-		return false;
-	}
+	first_rule(metaValueListKey, input) // key
+	rule(equals, input)					// =
+	rule(metaValueListValue, input) 	// value
 	return true;
 }
 
 bool metaValueList(lexer& input) {
-	if (!next_character(input, '<')) {
-		return false;
-	}
-	rule(metaValueListEntry, input)
+	first_rule(langle, input)			// <
+	rule(metaValueListEntry, input)		// entry
 
 	while (comma(input)) {
-		rule(metaValueListEntry, input)
+		rule(metaValueListEntry, input)	// (, entry) *
 	}
 
-	if (!next_character(input, '>')) {
-		error_missing(input, ">");
-		return false;
-	}
+	rule(rangle, input)					// >
 	return true;
 }
 

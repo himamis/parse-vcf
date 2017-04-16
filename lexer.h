@@ -50,11 +50,7 @@ bool next_string_until_newline(lexer& input, std::string& output);
 	return false; \
 }
 
-#define rule_character_first(lexer, character) if (!next_character(lexer, character)) { \
-	return false; \
-}
-
-#define rule_string(lexer, string) if (!next_string(lexer, string)) { \
+#define rule_string(string, lexer) if (!next_string(lexer, string)) { \
 	error_missing(lexer, string); \
 	return false; \
 }
@@ -71,6 +67,8 @@ bool next_string_until_newline(lexer& input, std::string& output);
 #define first_rule(rule, lexer, args...) if (!rule(lexer, ##args)) { \
 	return false; \
 }
+
+#define create_rule(name, helper, lexer) if ()
 
 } /* namespace parsevcf */
 
