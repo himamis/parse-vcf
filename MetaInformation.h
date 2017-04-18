@@ -2,115 +2,169 @@
 #ifndef METAINFORMATION_H_
 #define METAINFORMATION_H_
 
+#include <cstdlib>
+#include <map>
 #include <string>
 #include <vector>
-#include <map>
+#include "constants.h"
 
 namespace parsevcf {
 
-// Number type
-///////////////
+struct MetaEntry {
 
-typedef int number_t;
+	union {
+		const std::string* single;
+		const std::map<std::string, std::string>* map;
+	} value;
+};
 
-// If the field has one value per alternate allele (A)
-const number_t kAlternateNumber = -1;
-// If the field has one value for each possible allele (including the reference) (R)
-const number_t kReferenceNumber = -2;
-// If the field has one value for each possible genotype (more relevant to the FORMAT tags) (G)
-const number_t kGenotypeNumber = -3;
-// If the number of possible values varies, is unknown, or is unbounded (.)
-const number_t kUnknownNumber = -4;
+struct KeyValueEntry: public MetaEntry {
+
+	std::string name;
+
+	std::string line() const {
+		return *value.single;
+	}
+};
+
+struct ListEntry: public virtual MetaEntry {
+
+	std::string id() const {
+		return value_at(constants::kId);
+	}
+
+	std::string value_at(const std::string& key) const {
+		return value.map->at(key);
+	}
+};
+
+struct HasNumber: public virtual ListEntry {
+
+	constants::number::number_t number() const {
+		std::string number = value_at(constants::kNumber);
+		if (number == constants::kA) {
+			return constants::number::kAlternateNumber;
+		} else if (number == constants::kG) {
+			return constants::number::kGenotypeNumber;
+		} else if (number == constants::kR) {
+			return constants::number::kReferenceNumber;
+		}
+		return atoi(number.c_str());
+	}
+};
+
+struct HasDescription: public virtual ListEntry {
+
+	std::string description() const {
+		return value_at(constants::kDescription);
+	}
+};
+
+struct HasType: public virtual ListEntry {
+
+	constants::type::type_t type() const {
+		std::string info = value_at(constants::kType);
+		if (info == constants::kInteger) {
+			return constants::type::kInteger;
+		} else if (info == constants::kFloat) {
+			return constants::type::kFloat;
+		} else if (info == constants::kString) {
+			return constants::type::kString;
+		} else if (info == constants::kFlag) {
+			return constants::type::kFlag;
+		} else if (info == constants::kCharacter) {
+			return constants::type::kCharacter;
+		}
+		//throw error();
+		return constants::type::kInteger;
+	}
+};
 
 // Info field
 ///////////////
 
-enum InfoType {
-	kIntegerInfoType,
-	kFloatInfoType,
-	kFlagInfoType,
-	kCharacterInfoType,
-	kStringInfoType
-};
+struct InfoField: public HasNumber, public HasDescription, public HasType {
 
-struct InfoField {
-	const std::string& id;
-	const InfoType type;
-	const number_t number;
-	const std::string& description;
-	const std::string* source;
-	const std::string* version;
+	constants::type::type_t info_type() const {
+		return type();
+	}
 };
 
 // Format field
 ////////////////
+struct FormatField: public HasNumber, public HasDescription, public HasType {
 
-enum FormatType {
-	kIntegerFormatType,
-	kFloatFormatType,
-	kCharacterFormatType,
-	kStringFormatType
-};
-
-struct FormatField {
-	const std::string& id;
-	const number_t number;
-	const FormatType type;
-	const std::string& description;
+	constants::type::type_t format_type() const {
+		constants::type::type_t format_t = type();
+		if (format_t == constants::type::kFlag) {
+			// error();
+		}
+		return format_t;
+	}
 };
 
 // Filter field
 ////////////////
 
-struct FilterField {
-	const std::string& id;
-	const std::string& description;
-};
+typedef HasDescription FilterField;
 
 // Alt field
 ////////////////
 
-struct AltField {
-	const std::string& id;
-	const std::string& description;
-};
+typedef HasDescription AltField;
 
 // Contig field
 ////////////////
 
-struct ContigField {
-	const std::string& id;
-	const unsigned long length;
-	const std::string* md5_checksum;
-	const std::string* url;
+struct ContigField: public ListEntry {
+
+	unsigned long length() const {
+		return atol(value_at(constants::kLength).c_str());
+	}
+
+	std::string md5() const {
+		return value_at(constants::kMd5);
+	}
+
+	std::string url() const {
+		return value_at(constants::kUrl);
+	}
 };
 
 // Meta and Sample fields
 /////////////////////////
 
-typedef FormatType MetaType;
+struct MetaField: public HasNumber, public HasType {
 
-struct MetaField {
-	const std::string& id;
-	const MetaType type;
-	const number_t number;
-	const std::vector<const std::string&>& values;
+	std::vector<std::string> values() const {
+		std::string val = value_at(constants::kValues);
+		std::vector<std::string> vec;
+		// TODO
+
+		return vec;
+	}
 };
 
-struct SampleField {
-	const std::string& id;
-	const std::map<MetaField*, const std::string&> values;
+struct SampleField: public HasDescription {
+
+	std::string assay() const {
+		return value_at(constants::kAssay);
+	}
+
+	std::string ethnicity() const {
+		return value_at(constants::kEthnicity);
+	}
+
+	std::string disease() const {
+		return value_at(constants::kDisease);
+	}
 };
 
 // Pedigree field
 //////////////////
 
-struct PedigreeField {
-	const std::string& id;
-	// length 1 corresponds to original
-	// length 2 corresponds to mother and father
-	// length >2 corresponds to the i-th ancestor
-	const std::vector<const std::string&>& names;
+struct PedigreeField: public ListEntry {
+	// TODO
 };
 
 } /* namespace parsevcf */

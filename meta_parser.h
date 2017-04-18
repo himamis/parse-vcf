@@ -3,10 +3,11 @@
 #define META_PARSER_H_
 
 #include "lexer.h"
+#include "DefaultHandler.h"
 
 namespace parsevcf {
 
-bool metaInformation(lexer& input);
+bool metaInformation(lexer& input, DefaultHandler& handler);
 
 } /* namespace parsevcf */
 

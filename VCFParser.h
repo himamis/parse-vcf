@@ -9,9 +9,9 @@ namespace parsevcf {
 
 class VCFParser {
 	std::ifstream& _input;
-	const DefaultHandler& _handler;
+	DefaultHandler& _handler;
 public:
-	VCFParser(std::ifstream& input, const DefaultHandler& handler);
+	VCFParser(std::ifstream& input, DefaultHandler& handler);
 	virtual ~VCFParser();
 
 	void parse();

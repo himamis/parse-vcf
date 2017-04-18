@@ -3,10 +3,11 @@
 #define PARSER_H_
 
 #include <istream>
+#include "DefaultHandler.h"
 
 namespace parsevcf {
 
-bool parse(std::istream& input);
+bool parse(std::istream& input, DefaultHandler& handler);
 
 } /* namespace parsevcf */
 

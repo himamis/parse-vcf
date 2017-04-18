@@ -6,15 +6,15 @@
 
 namespace parsevcf {
 
-bool parse(std::istream& input) {
+bool parse(std::istream& input, DefaultHandler& handler) {
 	lexer lex = lexer(input);
 
-	metaInformation(lex);
-	if (!header(lex)) {
+	metaInformation(lex, handler);
+	if (!header(lex, handler)) {
 		error_missing(lex, "header");
 		return false;
 	}
-	if (!entries(lex)) {
+	if (!entries(lex, handler)) {
 		error_missing(lex, "entries");
 		return false;
 	}

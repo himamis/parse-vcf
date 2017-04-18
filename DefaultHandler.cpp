@@ -1,5 +1,6 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
 #include "DefaultHandler.h"
+#include <vector>
 
 namespace parsevcf {
 
@@ -11,7 +12,9 @@ void DefaultHandler::endDocument(const std::string& document_name) { }
 
 void DefaultHandler::fileformat(const std::string& format) { }
 
-void DefaultHandler::extraField(const std::string& key, const std::string& value) { }
+void DefaultHandler::extraField(const ListEntry& field) { }
+
+void DefaultHandler::extraField(const KeyValueEntry& field) { }
 
 void DefaultHandler::infoField(const InfoField& info_field) { }
 
@@ -27,7 +30,9 @@ void DefaultHandler::sampleField(const SampleField& sample_field) { }
 
 void DefaultHandler::contigField(const ContigField& contig_field) { }
 
-void DefaultHandler::sampleNames(const std::string& names) { }
+void DefaultHandler::pedigreeField(const PedigreeField& field) { }
+
+void DefaultHandler::sampleNames(const std::vector<std::string>& names) { }
 
 void DefaultHandler::sample(const Sample& sample) { }
 

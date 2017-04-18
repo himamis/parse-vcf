@@ -9,13 +9,13 @@ using namespace std;
 
 namespace parsevcf {
 
-VCFParser::VCFParser(std::ifstream& input, const DefaultHandler& handler) :
+VCFParser::VCFParser(std::ifstream& input, DefaultHandler& handler) :
 		_input(input), _handler(handler) { }
 
 VCFParser::~VCFParser() { }
 
 void VCFParser::parse() {
-	if (parsevcf::parse(_input)) {
+	if (parsevcf::parse(_input, _handler)) {
 		printf("%s", "All good man.\n");
 	} else {
 		printf("%s", "Whoa, something is wrong\n");

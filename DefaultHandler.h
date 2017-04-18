@@ -15,17 +15,19 @@ public:
 	virtual void endDocument(const std::string& document_name);
 
 	virtual void fileformat(const std::string& format);
-	virtual void extraField(const std::string& key, const std::string& value);
+	virtual void extraField(const ListEntry& field);
+	virtual void extraField(const KeyValueEntry& field);
 
-	virtual void infoField(const InfoField& info_field);
-	virtual void filterField(const FilterField& filter_field);
-	virtual void formatField(const FormatField& format_field);
-	virtual void altField(const AltField& alt_field);
-	virtual void metaField(const MetaField& meta_field);
-	virtual void sampleField(const SampleField& sample_field);
-	virtual void contigField(const ContigField& contig_field);
+	virtual void infoField(const InfoField& field);
+	virtual void filterField(const FilterField& field);
+	virtual void formatField(const FormatField& field);
+	virtual void altField(const AltField& field);
+	virtual void metaField(const MetaField& field);
+	virtual void sampleField(const SampleField& field);
+	virtual void contigField(const ContigField& field);
+	virtual void pedigreeField(const PedigreeField& field);
 
-	virtual void sampleNames(const std::string& names);
+	virtual void sampleNames(const std::vector<std::string>& names);
 
 	virtual void sample(const Sample& sample);
 };

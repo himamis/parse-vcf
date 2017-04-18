@@ -2,18 +2,31 @@
 #include "MetaInformation.h"
 #include "VCFParser.h"
 #include "DefaultHandler.h"
+#include <iostream>
 
 using namespace parsevcf;
 
+class NoisyHandler: public DefaultHandler {
+
+	void sampleNames(const std::vector<std::string>& names) {
+		std::cout << names[0];
+	}
+
+	void infoField(const InfoField& field) {
+		std::cout << field.id();
+		std::cout << std::endl;
+	}
+};
+
 int main(int argc, char **argv) {
-	parsevcf::InfoField info = {.id = "ID", .type = kIntegerInfoType, .number = kGenotypeNumber,
-			.description = "Description", .source = 0, .version = 0
-	};
+	std::string csa = "csa";
+	parsevcf::InfoField fi;
+	fi.value.single = &csa;
 
 	std::ifstream input;
 	//input.open("../../../Downloads/CEU.low_coverage.2010_09.genotypes.vcf", std::ifstream::in);
 	input.open("test1.vcf", std::ifstream::in);
-	DefaultHandler handler;
+	NoisyHandler handler;
 
 	VCFParser parser = VCFParser(input, handler);
 

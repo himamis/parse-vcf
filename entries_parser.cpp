@@ -1,22 +1,12 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
 #include "entries_parser.h"
 
+#include "constants.h"
+
 using namespace std;
+using namespace parsevcf::constants;
 
 namespace parsevcf {
-
-static const string kChrom = "CHROM";
-static const string kPos = "POS";
-static const string kId = "ID";
-static const string kRef = "REF";
-static const string kAlt = "ALT";
-static const string kQual = "QUAL";
-static const string kFilter = "FILTER";
-static const string kInfo = "INFO";
-static const string kFormat = "FORMAT";
-
-static const string kPass = "PASS";
-static const string kUnknown = ".";
 
 bool tab(lexer& input) {
 	return next_character(input, '\t');
@@ -34,21 +24,27 @@ bool sampleName(lexer& input, string& sample) {
 	return next_string_until_one_of(input, sample, "\t\n");
 }
 
-bool sampleNames(lexer& input) {
-	first_rule(next_string, input, kFormat)
+bool sampleNames(lexer& input, DefaultHandler& handler) {
+	first_rule(next_string, input, constants::kFormat)
 	rule(tab, input)
 
+	vector<string> names;
 	string sample;
 	rule(sampleName, input, sample)
+	names.push_back(sample);
 
 	while (tab(input)) {
 		rule(sampleName, input, sample)
+		names.push_back(sample);
 	}
+
+	handler.sampleNames(names);
 	return true;
 }
 
-bool header(lexer& input) {
+bool header(lexer& input, DefaultHandler& handler) {
 	first_rule(hashtag, input)
+	using namespace constants;
 
 	rule_string(kChrom, input);
 	rule(tab, input)
@@ -67,7 +63,7 @@ bool header(lexer& input) {
 	rule_string(kInfo, input);
 
 	if (eat('\t', input)) {
-		rule(sampleNames, input)
+		rule(sampleNames, input, handler)
 	}
 
 	rule(next_line, input)
@@ -182,6 +178,7 @@ bool infoList(lexer& input) {
 }
 
 bool info(lexer& input) {
+
 	if (!next_string(input, kUnknown)) {
 		if (!infoList(input)) {
 			return false;
@@ -257,7 +254,7 @@ bool entry(lexer& input) {
 	return true;
 }
 
-bool entries(lexer& input) {
+bool entries(lexer& input, DefaultHandler& handler) {
 	while (entry(input)) {
 		rule(next_line, input)
 		if (input.stream.eof()) {
