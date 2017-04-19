@@ -81,6 +81,10 @@ const type_t kCharacter = 3;
 const type_t kString = 4;
 }
 
+typedef float quality_t;
+
+const quality_t kUnknownQuality = std::numeric_limits<float>::max();
+
 
 } /* namespace constants */
 } /* namespace parsevcf */

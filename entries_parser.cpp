@@ -70,192 +70,61 @@ bool header(lexer& input, DefaultHandler& handler) {
 	return true;
 }
 
-bool chrom(lexer& input) {
-	string ret;
+bool val(lexer& input, string& ret) {
 	if (!next_string_until_char(input, ret, '\t')) {
 		return false;
 	}
 	return true;
 }
 
-bool pos(lexer& input) {
-	string ret;
-	if (!next_string_until_char(input, ret, '\t')) {
+bool valorend(lexer& input, string& ret) {
+	if (!next_string_until_one_of(input, ret, "\t\n")) {
 		return false;
 	}
 	return true;
 }
 
-bool id(lexer& input) {
-	string ret;
-	if (!next_string_until_char(input, ret, '\t')) {
-		return false;
-	}
-	return true;
-}
-
-bool ref(lexer& input) {
-	string ret;
-	if (!next_string_until_char(input, ret, '\t')) {
-		return false;
-	}
-	return true;
-}
-
-bool alt(lexer& input) {
-	string ret;
-	if (!next_string_until_char(input, ret, '\t')) {
-		return false;
-	}
-	return true;
-}
-
-bool qual(lexer& input) {
-	string ret;
-	if (!next_string_until_char(input, ret, '\t')) {
-		return false;
-	}
-	return true;
-}
-
-bool filterValue(lexer& input) {
-	string filter;
-	if (!next_string_until_one_of(input, filter, "\t;")) {
-		return false;
-	}
-	return true;
-}
-
-bool filterList(lexer& input) {
-	first_rule(filterValue, input)
-	while (semicolon(input)) {
-		rule(filterValue, input)
-	}
-	return true;
-}
-
-bool filter(lexer& input) {
-	if (!next_string(input, kPass)) {
-		if (!next_string(input, kUnknown)) {
-			if (!filterList(input)) {
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
-bool infoValue(lexer& input) {
+bool entry(lexer& input, DefaultHandler& handler) {
 	string value;
-	if (!next_string_until_one_of(input, value, "\t;")) {
-		return false;
+	vector<string> values;
+
+	// chrom
+	first_rule(val, input, value)
+	values.push_back(value);
+
+	for (int i = 0; i < 7; i++) {
+		// pos, id, ref, alt, qual, filter info
+		rule(tab, input)
+		rule(val, input, value)
+		values.push_back(value);
 	}
-	return true;
-}
-
-bool infoKey(lexer& input) {
-	string key;
-	if (!next_string_until_one_of(input, key, "=\t;")) {
-		return false;
-	}
-	return true;
-}
-
-bool infoListEntry(lexer& input) {
-	first_rule(infoKey, input)
-	if (eat('=', input)) {
-		rule(infoValue, input)
-	}
-	return true;
-}
-
-bool infoList(lexer& input) {
-	first_rule(infoListEntry, input)
-	while (semicolon(input)) {
-		rule(infoListEntry, input)
-	}
-	return true;
-}
-
-bool info(lexer& input) {
-
-	if (!next_string(input, kUnknown)) {
-		if (!infoList(input)) {
-			return false;
-		}
-	}
-	return true;
-}
-
-bool formatEntry(lexer& input) {
-	string format;
-	if (!next_string_until_one_of(input, format, "\t:")) {
-		return false;
-	}
-	return true;
-}
-
-bool format(lexer& input) {
-	first_rule(formatEntry, input)
-	while (eat(':', input)) {
-		rule(formatEntry, input)
-	}
-	return true;
-}
-
-bool sampleValue(lexer& input) {
-	string entry;
-	if (!next_string_until_one_of(input, entry, "\t\n:")) {
-		return false;
-	}
-	return true;
-}
-
-bool sampleValues(lexer& input) {
-	first_rule(sampleValue, input)
-	while (eat(':', input)) {
-		rule(sampleValue, input)
-	}
-	return true;
-}
-
-bool sampleEntries(lexer& input) {
-	first_rule(sampleValues, input)
-	while(eat('\t', input)) {
-		rule(sampleValues, input)
-	}
-	return true;
-}
-
-bool entry(lexer& input) {
-	first_rule(chrom, input)
-
-	rule(tab, input)
-	rule(pos, input)
-	rule(tab, input)
-	rule(id, input)
-	rule(tab, input)
-	rule(ref, input)
-	rule(tab, input)
-	rule(alt, input)
-	rule(tab, input)
-	rule(qual, input)
-	rule(tab, input)
-	rule(filter, input)
-	rule(tab, input)
-	rule(info, input)
 
 	if (eat('\t', input)) {
-		rule(format, input)
+		// format
+		rule(val, input, value)
+		values.push_back(value);
 		rule(tab, input)
-		rule(sampleEntries, input)
+
+		// sample
+		rule(val, input, value)
+		values.push_back(value);
+
+		while (eat('\t', input)) {
+			// sample
+			rule(valorend, input, value)
+			values.push_back(value);
+		}
 	}
+
+	SNVEntry entry;
+	entry.values = values;
+	handler.entry(entry);
 
 	return true;
 }
 
 bool entries(lexer& input, DefaultHandler& handler) {
-	while (entry(input)) {
+	while (entry(input, handler)) {
 		rule(next_line, input)
 		if (input.stream.eof()) {
 			break;
