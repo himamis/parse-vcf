@@ -12,9 +12,21 @@ using namespace std;
 class TestHandler: public DefaultHandler {
 public:
 	std::string ff;
+	std::string doc_name;
+
+	bool startDocumentCalled;
+	bool endDocumentCalled;
 
 	void fileformat(const std::string& format) {
 		ff = format;
+	}
+
+	void startDocument() {
+		startDocumentCalled = true;
+	}
+
+	void endDocument() {
+		endDocumentCalled = true;
 	}
 };
 
@@ -25,7 +37,7 @@ TEST_CASE( "Minimal test case" ) {
 	REQUIRE( parser.parse() );
 }
 
-TEST_CASE( "A simple VCF test" ) {
+TEST_CASE( "Parsing a simple VCF file" ) {
 	ifstream input;
 	input.open("test/examples/test-simple.vcf", ifstream::in);
 	TestHandler handler;
@@ -33,7 +45,7 @@ TEST_CASE( "A simple VCF test" ) {
 	VCFParser parser = VCFParser(input, handler);
 	REQUIRE( parser.parse() );
 
-	SECTION( "File format" ) {
-		REQUIRE( handler.ff == "VCFv4.0" );
-	}
+	CHECK( handler.ff == "VCFv4.0" );
+	CHECK( handler.startDocumentCalled );
+	CHECK( handler.endDocumentCalled );
 }

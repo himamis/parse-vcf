@@ -11,8 +11,8 @@ class DefaultHandler {
 public:
 	virtual ~DefaultHandler();
 
-	virtual void startDocument(const std::string& document_name);
-	virtual void endDocument(const std::string& document_name);
+	virtual void startDocument();
+	virtual void endDocument();
 
 	virtual void fileformat(const std::string& format);
 	virtual void extraField(const ListEntry& field);

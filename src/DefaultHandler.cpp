@@ -6,9 +6,9 @@ namespace parsevcf {
 
 DefaultHandler::~DefaultHandler() { }
 
-void DefaultHandler::startDocument(const std::string& document_name) { }
+void DefaultHandler::startDocument() { }
 
-void DefaultHandler::endDocument(const std::string& document_name) { }
+void DefaultHandler::endDocument() { }
 
 void DefaultHandler::fileformat(const std::string& format) { }
 

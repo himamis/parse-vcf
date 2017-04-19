@@ -8,6 +8,7 @@ namespace parsevcf {
 
 bool parse(std::istream& input, DefaultHandler& handler) {
 	lexer lex = lexer(input);
+	handler.startDocument();
 
 	metaInformation(lex, handler);
 	if (!header(lex, handler)) {
@@ -18,6 +19,8 @@ bool parse(std::istream& input, DefaultHandler& handler) {
 		error_missing(lex, "entries");
 		return false;
 	}
+
+	handler.endDocument();
 	return true;
 }
 
