@@ -33,9 +33,9 @@ struct SNVEntry {
 		return tokenize(values[4], ',');
 	}
 
-	constants::quality_t qual() const {
-		if (values[5] == constants::kUnknown) {
-			return constants::kUnknownQuality;
+	quality_t qual() const {
+		if (values[5] == tokens::unknown) {
+			return constants::quality::unknown;
 		}
 		return atof(values[5].c_str());
 	}

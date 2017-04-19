@@ -30,7 +30,7 @@ struct KeyValueEntry: public MetaEntry {
 struct ListEntry: public virtual MetaEntry {
 
 	std::string id() const {
-		return value_at(constants::kId);
+		return value_at(tokens::id);
 	}
 
 	std::string value_at(const std::string& key) const {
@@ -40,14 +40,14 @@ struct ListEntry: public virtual MetaEntry {
 
 struct HasNumber: public virtual ListEntry {
 
-	constants::number::number_t number() const {
-		std::string number = value_at(constants::kNumber);
-		if (number == constants::kA) {
-			return constants::number::kAlternateNumber;
-		} else if (number == constants::kG) {
-			return constants::number::kGenotypeNumber;
-		} else if (number == constants::kR) {
-			return constants::number::kReferenceNumber;
+	number_t number() const {
+		std::string number = value_at(tokens::number);
+		if (number == tokens::a) {
+			return constants::number::alternate;
+		} else if (number == tokens::g) {
+			return constants::number::genotype;
+		} else if (number == tokens::r) {
+			return constants::number::reference;
 		}
 		return atoi(number.c_str());
 	}
@@ -56,27 +56,27 @@ struct HasNumber: public virtual ListEntry {
 struct HasDescription: public virtual ListEntry {
 
 	std::string description() const {
-		return value_at(constants::kDescription);
+		return value_at(tokens::description);
 	}
 };
 
 struct HasType: public virtual ListEntry {
 
-	constants::type::type_t type() const {
-		std::string info = value_at(constants::kType);
-		if (info == constants::kInteger) {
-			return constants::type::kInteger;
-		} else if (info == constants::kFloat) {
-			return constants::type::kFloat;
-		} else if (info == constants::kString) {
-			return constants::type::kString;
-		} else if (info == constants::kFlag) {
-			return constants::type::kFlag;
-		} else if (info == constants::kCharacter) {
-			return constants::type::kCharacter;
+	type_t type() const {
+		std::string info = value_at(tokens::type);
+		if (info == tokens::integer) {
+			return constants::type::integer;
+		} else if (info == tokens::float_) {
+			return constants::type::float_;
+		} else if (info == tokens::string) {
+			return constants::type::string;
+		} else if (info == tokens::flag) {
+			return constants::type::flag;
+		} else if (info == tokens::character) {
+			return constants::type::character;
 		}
-		//throw error();
-		return constants::type::kInteger;
+		exception::raise("Unknown type");
+		return 0;
 	}
 };
 
@@ -85,7 +85,7 @@ struct HasType: public virtual ListEntry {
 
 struct InfoField: public HasNumber, public HasDescription, public HasType {
 
-	constants::type::type_t info_type() const {
+	type_t info_type() const {
 		return type();
 	}
 };
@@ -94,10 +94,10 @@ struct InfoField: public HasNumber, public HasDescription, public HasType {
 ////////////////
 struct FormatField: public HasNumber, public HasDescription, public HasType {
 
-	constants::type::type_t format_type() const {
-		constants::type::type_t format_t = type();
-		if (format_t == constants::type::kFlag) {
-			// error();
+	type_t format_type() const {
+		type_t format_t = type();
+		if (format_t == constants::type::flag) {
+			exception::raise("Unknown format type");
 		}
 		return format_t;
 	}
@@ -119,15 +119,15 @@ typedef HasDescription AltField;
 struct ContigField: public ListEntry {
 
 	unsigned long length() const {
-		return atol(value_at(constants::kLength).c_str());
+		return atol(value_at(tokens::length).c_str());
 	}
 
 	std::string md5() const {
-		return value_at(constants::kMd5);
+		return value_at(tokens::md5);
 	}
 
 	std::string url() const {
-		return value_at(constants::kUrl);
+		return value_at(tokens::url);
 	}
 };
 
@@ -137,7 +137,7 @@ struct ContigField: public ListEntry {
 struct MetaField: public HasNumber, public HasType {
 
 	std::vector<std::string> values() const {
-		std::string val = value_at(constants::kValues);
+		std::string val = value_at(tokens::values);
 		std::vector<std::string> vec;
 		// TODO
 
@@ -148,15 +148,15 @@ struct MetaField: public HasNumber, public HasType {
 struct SampleField: public HasDescription {
 
 	std::string assay() const {
-		return value_at(constants::kAssay);
+		return value_at(tokens::assay);
 	}
 
 	std::string ethnicity() const {
-		return value_at(constants::kEthnicity);
+		return value_at(tokens::ethnicity);
 	}
 
 	std::string disease() const {
-		return value_at(constants::kDisease);
+		return value_at(tokens::disease);
 	}
 };
 

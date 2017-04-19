@@ -11,82 +11,99 @@
 #include <string>
 
 namespace parsevcf {
-namespace constants {
 
-const std::string kChrom = "CHROM";
-const std::string kPos = "POS";
-const std::string kId = "ID";
-const std::string kRef = "REF";
-const std::string kAlt = "ALT";
-const std::string kQual = "QUAL";
-const std::string kFilter = "FILTER";
-const std::string kInfo = "INFO";
-const std::string kFormat = "FORMAT";
-
-const std::string kPass = "PASS";
-const std::string kUnknown = ".";
-
-const std::string kFileformat = "fileformat";
-const std::string kDescription = "Description";
-const std::string kContig = "contig";
-const std::string kSample = "META";
-const std::string kMeta = "SAMPLE";
-const std::string kPedigree = "PEDIGREE";
-
-const std::string kType = "Type";
-const std::string kInteger = "Integer";
-const std::string kString = "String";
-const std::string kFloat = "Float";
-const std::string kFlag = "Flag";
-const std::string kCharacter = "Character";
-
-const std::string kNumber = "Number";
-const std::string kA = "A";
-const std::string kR = "R";
-const std::string kG = "G";
-const std::string kDot = ".";
-
-const std::string kLength = "length";
-const std::string kUrl = "URL";
-const std::string kMd5 = "md5";
-
-const std::string kValues = "Values";
-
-const std::string kAssay = "Assay";
-const std::string kDisease = "Disease";
-const std::string kEthnicity = "Ethnicity";
-
-
-// TODO move to types
-namespace number {
+/* types */
 typedef int number_t;
-
-// If the field has one value per alternate allele (A)
-const number_t kAlternateNumber = -1;
-// If the field has one value for each possible allele (including the reference) (R)
-const number_t kReferenceNumber = -2;
-// If the field has one value for each possible genotype (more relevant to the FORMAT tags) (G)
-const number_t kGenotypeNumber = -3;
-// If the number of possible values varies, is unknown, or is unbounded (.)
-const number_t kUnknownNumber = -4;
-}
-
-namespace type {
-typedef short type_t;
-
-const type_t kInteger = 0;
-const type_t kFloat = 1;
-const type_t kFlag = 2;
-const type_t kCharacter = 3;
-const type_t kString = 4;
-}
 
 typedef float quality_t;
 
-const quality_t kUnknownQuality = std::numeric_limits<float>::max();
+typedef short type_t;
+
+namespace exception {
+
+void raise(const std::string& message) {
+	throw std::runtime_error(message);
+}
+
+} /* namespace exception */
+
+namespace tokens {
+
+const std::string chrom = "CHROM";
+const std::string pos = "POS";
+const std::string id = "ID";
+const std::string ref = "REF";
+const std::string alt = "ALT";
+const std::string qual = "QUAL";
+const std::string filter = "FILTER";
+const std::string info = "INFO";
+const std::string format = "FORMAT";
+
+const std::string pass = "PASS";
+const std::string unknown = ".";
+
+const std::string fileformat = "fileformat";
+const std::string description = "Description";
+const std::string contig = "contig";
+const std::string sample = "META";
+const std::string meta = "SAMPLE";
+const std::string pedigree = "PEDIGREE";
+
+const std::string type = "Type";
+const std::string integer = "Integer";
+const std::string string = "String";
+const std::string float_ = "Float";
+const std::string flag = "Flag";
+const std::string character = "Character";
+
+const std::string number = "Number";
+const std::string a = "A";
+const std::string r = "R";
+const std::string g = "G";
+const std::string dot = ".";
+
+const std::string length = "length";
+const std::string url = "URL";
+const std::string md5 = "md5";
+
+const std::string values = "Values";
+
+const std::string assay = "Assay";
+const std::string disease = "Disease";
+const std::string ethnicity = "Ethnicity";
+
+} /* namespace tokens */
+
+namespace constants {
+
+namespace number {
+
+const number_t alternate = -1;
+const number_t reference = -2;
+const number_t genotype = -3;
+const number_t unknown = -4;
+
+} /* namespace number */
+
+namespace type {
+
+const type_t integer = 0;
+const type_t float_ = 1;
+const type_t flag = 2;
+const type_t character = 3;
+const type_t string = 4;
+
+} /* namspace type */
+
+namespace quality {
+
+const quality_t unknown = std::numeric_limits<float>::max();
+
+} /* namspace quality */
 
 
 } /* namespace constants */
+
 } /* namespace parsevcf */
 
 #endif /* CONSTANTS_H_ */
