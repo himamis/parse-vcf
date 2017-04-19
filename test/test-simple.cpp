@@ -16,5 +16,5 @@ TEST_CASE("load simple file and parse") {
 
 	VCFParser parser = VCFParser(input, handler);
 
-	REQUIRE(parser.parse() == 0);
+	REQUIRE(parser.parse());
 }

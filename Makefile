@@ -35,7 +35,7 @@ $(OBJDIR)/%.o: $(TESTSDIR)/%.cpp
 	
 tests: $(TEST_OBJECTS) $(OBJECTS)
 	$(CC) $(CFLAGS) -o test_run $(OBJECTS) $(TEST_OBJECTS) $(LFLAGS) $(LIBS)
-	./test_run
+	./test_run -r compact
 
 clean:
 	rm -rf obj test_run
