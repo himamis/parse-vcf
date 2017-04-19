@@ -34,3 +34,5 @@
 .project
 .settings
 parsevcf
+obj
+test_run
