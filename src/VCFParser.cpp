@@ -14,12 +14,8 @@ VCFParser::VCFParser(std::ifstream& input, DefaultHandler& handler) :
 
 VCFParser::~VCFParser() { }
 
-void VCFParser::parse() {
-	if (parsevcf::parse(_input, _handler)) {
-		printf("%s", "All good man.\n");
-	} else {
-		printf("%s", "Whoa, something is wrong\n");
-	}
+bool VCFParser::parse() {
+	return parsevcf::parse(_input, _handler);
 }
 
 } /* namespace parsevcf */

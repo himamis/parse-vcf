@@ -14,7 +14,7 @@ public:
 	VCFParser(std::ifstream& input, DefaultHandler& handler);
 	virtual ~VCFParser();
 
-	void parse();
+	bool parse();
 };
 
 } /* namespace parsevcf */
