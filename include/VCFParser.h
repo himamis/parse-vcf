@@ -8,10 +8,10 @@
 namespace parsevcf {
 
 class VCFParser {
-	std::ifstream& _input;
+	std::istream& _input;
 	DefaultHandler& _handler;
 public:
-	VCFParser(std::ifstream& input, DefaultHandler& handler);
+	VCFParser(std::istream& input, DefaultHandler& handler);
 	virtual ~VCFParser();
 
 	bool parse();

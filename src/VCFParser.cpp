@@ -9,8 +9,9 @@ using namespace std;
 
 namespace parsevcf {
 
-VCFParser::VCFParser(std::ifstream& input, DefaultHandler& handler) :
-		_input(input), _handler(handler) { }
+VCFParser::VCFParser(std::istream& input, DefaultHandler& handler) :
+		_handler(handler), _input(input) {
+}
 
 VCFParser::~VCFParser() { }
 

@@ -26,7 +26,7 @@ const std::string kFormat = "FORMAT";
 const std::string kPass = "PASS";
 const std::string kUnknown = ".";
 
-const std::string kFileFormat = "fileFormat";
+const std::string kFileformat = "fileformat";
 const std::string kDescription = "Description";
 const std::string kContig = "contig";
 const std::string kSample = "META";

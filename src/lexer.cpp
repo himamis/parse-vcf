@@ -30,6 +30,7 @@ void error_missing(const lexer& input, const string& expecting = unknown) {
 
 bool next_line(lexer& input) {
 	if (input.pos == input.current_line.length() - 1) {
+		input.current_line = "";
 		getline(input.stream, input.current_line);
 		input.current_line += '\n';
 		input.pos = 0;

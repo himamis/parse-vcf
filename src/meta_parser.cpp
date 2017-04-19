@@ -122,7 +122,7 @@ bool metaValue(lexer& input, meta_field_list_t& values) {
 }
 
 void parseMetaEntry(DefaultHandler& handler, const string& key, const map<string, string>& values) {
-	if (key == constants::kFileFormat) {
+	if (key == constants::kFileformat) {
 		handler.fileformat(values.begin()->first);
 	} else if (key == constants::kInfo) {
 		InfoField field;
