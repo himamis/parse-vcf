@@ -1,10 +1,4 @@
-/*
- * constants.h
- *
- *  Created on: 17 Apr 2017
- *      Author: balazs
- */
-
+/* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
 #ifndef CONSTANTS_H_
 #define CONSTANTS_H_
 
@@ -21,7 +15,7 @@ typedef short type_t;
 
 namespace exception {
 
-void raise(const std::string& message) {
+inline void raise(const std::string& message) {
 	throw std::runtime_error(message);
 }
 

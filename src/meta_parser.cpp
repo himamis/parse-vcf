@@ -122,37 +122,37 @@ bool metaValue(lexer& input, meta_field_list_t& values) {
 }
 
 void parseMetaEntry(DefaultHandler& handler, const string& key, const map<string, string>& values) {
-	if (key == constants::kFileformat) {
+	if (key == tokens::fileformat) {
 		handler.fileformat(values.begin()->first);
-	} else if (key == constants::kInfo) {
+	} else if (key == tokens::info) {
 		InfoField field;
 		field.value.map = &values;
 		handler.infoField(field);
-	} else if (key == constants::kFormat) {
+	} else if (key == tokens::format) {
 		FormatField field;
 		field.value.map = &values;
 		handler.formatField(field);
-	} else if (key == constants::kFilter) {
+	} else if (key == tokens::filter) {
 		FilterField field;
 		field.value.map = &values;
 		handler.filterField(field);
-	} else if (key == constants::kAlt) {
+	} else if (key == tokens::alt) {
 		AltField field;
 		field.value.map = &values;
 		handler.altField(field);
-	} else if (key == constants::kContig) {
+	} else if (key == tokens::contig) {
 		ContigField field;
 		field.value.map = &values;
 		handler.contigField(field);
-	} else if (key == constants::kSample) {
+	} else if (key == tokens::sample) {
 		SampleField field;
 		field.value.map = &values;
 		handler.sampleField(field);
-	} else if (key == constants::kMeta) {
+	} else if (key == tokens::meta) {
 		MetaField field;
 		field.value.map = &values;
 		handler.metaField(field);
-	} else if (key == constants::kPedigree) {
+	} else if (key == tokens::pedigree) {
 		PedigreeField field;
 		field.value.map = &values;
 		handler.pedigreeField(field);

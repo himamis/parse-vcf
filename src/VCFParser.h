@@ -2,7 +2,7 @@
 #ifndef VCFPARSER_H_
 #define VCFPARSER_H_
 
-#include <fstream>
+#include <istream>
 #include "DefaultHandler.h"
 
 namespace parsevcf {

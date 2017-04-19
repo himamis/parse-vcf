@@ -5,6 +5,7 @@
 #include "VCFParser.h"
 #include "DefaultHandler.h"
 #include <iostream>
+#include <fstream>
 
 using namespace parsevcf;
 using namespace std;

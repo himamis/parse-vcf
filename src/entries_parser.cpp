@@ -25,7 +25,7 @@ bool sampleName(lexer& input, string& sample) {
 }
 
 bool sampleNames(lexer& input, DefaultHandler& handler) {
-	first_rule(next_string, input, constants::kFormat)
+	first_rule(next_string, input, tokens::format)
 	rule(tab, input)
 
 	vector<string> names;
@@ -44,23 +44,23 @@ bool sampleNames(lexer& input, DefaultHandler& handler) {
 
 bool header(lexer& input, DefaultHandler& handler) {
 	first_rule(hashtag, input)
-	using namespace constants;
+	using namespace tokens;
 
-	rule_string(kChrom, input);
+	rule_string(chrom, input);
 	rule(tab, input)
-	rule_string(kPos, input);
+	rule_string(pos, input);
 	rule(tab, input)
-	rule_string(kId, input);
+	rule_string(id, input);
 	rule(tab, input)
-	rule_string(kRef, input);
+	rule_string(ref, input);
 	rule(tab, input)
-	rule_string(kAlt, input);
+	rule_string(alt, input);
 	rule(tab, input)
-	rule_string(kQual, input);
+	rule_string(qual, input);
 	rule(tab, input)
-	rule_string(kFilter, input);
+	rule_string(filter, input);
 	rule(tab, input)
-	rule_string(kInfo, input);
+	rule_string(info, input);
 
 	if (eat('\t', input)) {
 		rule(sampleNames, input, handler)
