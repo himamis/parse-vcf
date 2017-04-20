@@ -6,7 +6,8 @@ This library parses variant call files (VCF) written in standard c++. The parser
 
 Check out a copy of this library, include all the files from the `src` folder and you're ready to go.
 A minimal example:
-```
+
+``` cpp
 #include "DefaultHandler.h"
 #include "SNVEntry.h"
 #include "VCFParser.h"
