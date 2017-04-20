@@ -22,10 +22,7 @@ public:
 	vector<InfoField> infoFields;
 	vector<FilterField> filterFields;
 	vector<FormatField> formatFields;
-	vector<AltField> altFields;
-	vector<MetaField> metaFields;
 	vector<SampleField> sampleFields;
-	vector<ContigField> contigFields;
 	vector<PedigreeField> pedigreeFields;
 
 	void fileformat(const std::string& format) {
@@ -60,20 +57,8 @@ public:
 		formatFields.push_back(field);
 	}
 
-	void altField(const AltField& field) {
-		altFields.push_back(field);
-	}
-
-	void metaField(const MetaField& field) {
-		metaFields.push_back(field);
-	}
-
 	void sampleField(const SampleField& field) {
 		sampleFields.push_back(field);
-	}
-
-	void contigField(const ContigField& field) {
-		contigFields.push_back(field);
 	}
 
 	void pedigreeField(const PedigreeField& field) {
@@ -120,8 +105,8 @@ TEST_CASE( "Parsing VCF file with meta data" ) {
 	SECTION( "Parsing key value pairs" ) {
 		REQUIRE( handler.keyvalueExtraFields.size() == 4 );
 
-		string keys[] = {"fileDate", "source", "reference", "phasing"};
-		string values[] = {"20090805", "myImputationProgramV3.1", "1000GenomesPilot-NCBI36", "partial"};
+		string keys[] = { "fileDate", "source", "reference", "phasing" };
+		string values[] = { "20090805", "myImputationProgramV3.1", "1000GenomesPilot-NCBI36", "partial" };
 
 		for (unsigned i = 0; i < 4; i++) {
 			KeyValueEntry entry = handler.keyvalueExtraFields[i];
@@ -131,6 +116,55 @@ TEST_CASE( "Parsing VCF file with meta data" ) {
 	}
 
 	SECTION( "Parsing info fields" ) {
-		REQUIRE( handler.infoFields.size() == 3);
+		REQUIRE( handler.infoFields.size() == 3 );
+
+		string ids[] = { "NS", "AF", "H2" };
+		number_t numbers[] = { 1, constants::number::genotype, 0 };
+		type_t types[] = { constants::type::integer, constants::type::float_, constants::type::flag };
+		string descriptions[] = { "Number of Samples With Data", "Allele Frequency", "HapMap2 membership" };
+
+		for (unsigned i = 0; i < 3; i++) {
+			InfoField field = handler.infoFields[i];
+			CHECK( field.id() == ids[i] );
+			CHECK( field.number() == numbers[i] );
+			CHECK( field.type() == types[i] );
+			CHECK( field.description() == descriptions[i] );
+		}
 	}
+
+	SECTION( "Parsing filter field") {
+		REQUIRE( handler.filterFields.size() == 1 );
+		FilterField filter = handler.filterFields[0];
+
+		CHECK( filter.id() == "q10" );
+		CHECK( filter.description() == "Quality below 10" );
+	}
+
+	SECTION( "Parsing format" ) {
+		REQUIRE( handler.formatFields.size() == 1 );
+		FormatField format = handler.formatFields[0];
+
+		CHECK( format.id() == "HQ" );
+		CHECK( format.number() == 2 );
+		CHECK( format.type() == constants::type::integer );
+		CHECK( format.description() == "Haplotype Quality" );
+	}
+
+	SECTION( "Parsing pedigree" ) {
+		REQUIRE( handler.pedigreeFields.size() == 1 );
+		PedigreeField field = handler.pedigreeFields[0];
+
+		CHECK( field.id() == "TumourSample" );
+		CHECK( field.original() == "GermlineID" );
+		CHECK( field.father() == "" );
+		CHECK( field.mother() == "" );
+	}
+}
+
+TEST_CASE( "Parsing VCF file with wrong format" ) {
+	stringstream stream("Invalid format");
+	DefaultHandler handler;
+	VCFParser parser(stream, handler);
+
+	REQUIRE_THROWS_WITH( parser.parse(), Catch::Contains("expecting header") );
 }

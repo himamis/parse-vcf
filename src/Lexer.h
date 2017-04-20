@@ -18,7 +18,7 @@ struct lexer {
 	int line;
 };
 
-void error(const lexer& input, const std::string& message);
+void error_message(const lexer& input, const std::string& message);
 
 void error_missing(const lexer& input, const std::string& expecting);
 

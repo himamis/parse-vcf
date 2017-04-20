@@ -2,6 +2,7 @@
 #include "Lexer.h"
 
 #include <iostream>
+#include "Common.h"
 
 using namespace std;
 
@@ -9,23 +10,25 @@ namespace parsevcf {
 
 static const string unknown = "unknown value";
 
-void error(const lexer& input, const string& message) {
-	cout << "Error parsing at line ";
-	cout << input.line;
-	cout << " at position ";
-	cout << input.pos;
-	cout << ".";
-	cout << endl;
-	cout << message;
-	cout << endl;
-	cout.flush();
+void error_message(const lexer& input, const string& message) {
+	string exception_msg = "";
+	exception_msg += "Error parsing at line: ";
+	exception_msg += input.line;
+	exception_msg += "\n";
+	exception_msg += "Position: ";
+	exception_msg += input.pos;
+	exception_msg += "\n";
+	exception_msg += message;
+	exception_msg += "\n";
+
+	parsevcf::exception::raise(message);
 }
 
 void error_missing(const lexer& input, const string& expecting = unknown) {
 	string message = "Error, was expecting ";
 	message += expecting;
 	message += ".";
-	error(input, message);
+	error_message(input, message);
 }
 
 bool next_line(lexer& input) {
