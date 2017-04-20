@@ -5,7 +5,8 @@ SOURCES = \
 	VCFParser.cpp \
 	MetaParser.cpp \
 	EntryParser.cpp \
-	Lexer.cpp 
+	Lexer.cpp \
+	Common.cpp
 	
 INCLUDES = \
 	DefaultHandler.h \

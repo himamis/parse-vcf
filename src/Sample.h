@@ -2,11 +2,19 @@
 #ifndef SAMPLE_H_
 #define SAMPLE_H_
 
+#include <string>
+#include <vector>
+#include "Common.h"
+
 namespace parsevcf {
 
 struct Sample {
+
 	std::string value;
 
+	std::vector<std::string> data() const {
+		return tokenize(value, ':');
+	}
 };
 
 } /* namespace parsevcf */

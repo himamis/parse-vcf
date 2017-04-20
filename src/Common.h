@@ -3,6 +3,7 @@
 #define CONSTANTS_H_
 
 #include <string>
+#include <vector>
 
 namespace parsevcf {
 
@@ -101,6 +102,8 @@ const quality_t unknown = std::numeric_limits<float>::max();
 } /* namspace quality */
 
 } /* namespace constants */
+
+std::vector<std::string> tokenize(const std::string& str, const char token);
 
 } /* namespace parsevcf */
 
