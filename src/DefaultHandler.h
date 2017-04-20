@@ -29,7 +29,7 @@ public:
 
 	virtual void sampleNames(const std::vector<std::string>& names);
 
-	virtual void entry(const SNVEntry& sample);
+	virtual void entry(const SNVEntry& entry);
 };
 
 } /* namespace parsevcf */

@@ -34,6 +34,6 @@ void DefaultHandler::pedigreeField(const PedigreeField& field) { }
 
 void DefaultHandler::sampleNames(const std::vector<std::string>& names) { }
 
-void DefaultHandler::entry(const SNVEntry& sample) { }
+void DefaultHandler::entry(const SNVEntry& entry) { }
 
 } /* namespace parsevcf */
