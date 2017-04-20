@@ -21,7 +21,8 @@ INCLUDES = \
 
 TEST_SOURCES = \
 	main.cpp \
-	test-simple.cpp
+	test-simple.cpp \
+	test-common.cpp
 
 SRCDIR = src
 OBJDIR = obj

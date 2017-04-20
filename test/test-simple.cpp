@@ -215,5 +215,17 @@ TEST_CASE( "Samples" ) {
 		CHECK( entry.qual() == Approx(29) );
 	}
 
+	SECTION( "Sample values" ) {
+		SNVEntry entry = handler.entries[0];
+		vector<Sample> samples = entry.samples();
+		REQUIRE( samples.size() == 3);
+		Sample sample = samples[0];
+		vector<string> data = sample.data();
+		REQUIRE( data.size() == 4 );
+		CHECK( data[0] == "0|0" );
+		CHECK( data[1] == "48" );
+		CHECK( data[2] == "1" );
+		CHECK( data[3] == "51,51" );
+	}
 
 }
