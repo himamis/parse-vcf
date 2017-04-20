@@ -43,6 +43,10 @@ bool next_line(lexer& input) {
 	return false;
 }
 
+bool eof(lexer& input) {
+	return input.current_line == "\n" && input.stream.eof();
+}
+
 bool next_character(lexer& input, const char& character) {
 	if (character == '\n') {
 		return next_line(input);

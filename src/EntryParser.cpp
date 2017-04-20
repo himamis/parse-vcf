@@ -126,7 +126,7 @@ bool entry(lexer& input, DefaultHandler& handler) {
 bool entries(lexer& input, DefaultHandler& handler) {
 	while (entry(input, handler)) {
 		rule(next_line, input)
-		if (input.stream.eof()) {
+		if (eof(input)) {
 			break;
 		}
 	}

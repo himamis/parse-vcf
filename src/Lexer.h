@@ -24,6 +24,8 @@ void error_missing(const lexer& input, const std::string& expecting);
 
 bool next_line(lexer& input);
 
+bool eof(lexer& input);
+
 bool next_character(lexer& input, const char& character);
 
 bool next_string(lexer& input, const std::string& str);
