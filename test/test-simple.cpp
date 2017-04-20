@@ -25,6 +25,9 @@ public:
 	vector<SampleField> sampleFields;
 	vector<PedigreeField> pedigreeFields;
 
+	vector<string> samples;
+	vector<SNVEntry> entries;
+
 	void fileformat(const std::string& format) {
 		fileformats.push_back(format);
 	}
@@ -66,11 +69,12 @@ public:
 	}
 
 	void sampleNames(const std::vector<std::string>& names) {
-
+		samples = names;
 	}
 
-	void entry(const SNVEntry& entry) { }
-
+	void entry(const SNVEntry& entry) {
+		entries.push_back(entry);
+	}
 };
 
 TEST_CASE( "Minimal test case" ) {
@@ -181,4 +185,35 @@ TEST_CASE( "Parsing VCF file with wrong format" ) {
 		InfoField field = handler.infoFields[0];
 		CHECK_THROWS_WITH( field.type(), Catch::Contains("type") );
 	}
+}
+
+TEST_CASE( "Samples" ) {
+	ifstream input;
+	input.open("test/examples/test-simple.vcf", ifstream::in);
+	TestHandler handler;
+	VCFParser parser(input, handler);
+
+	REQUIRE( parser.parse() );
+	REQUIRE( handler.entries.size() == 5 );
+	REQUIRE( handler.samples.size() == 3 );
+
+	SECTION( "Sample names" ) {
+		CHECK( handler.samples[0] == "NA00001" );
+		CHECK( handler.samples[1] == "NA00002" );
+		CHECK( handler.samples[2] == "NA00003" );
+	}
+
+	SECTION( "Entry values" ) {
+		SNVEntry entry = handler.entries[0];
+		CHECK( entry.chrom() == "20" );
+		CHECK( entry.pos() == 14370 );
+		CHECK( entry.id().size() == 1 );
+		CHECK( entry.id()[0] == "rs6054257" );
+		CHECK( entry.ref() == "G" );
+		CHECK( entry.alt().size() == 1 );
+		CHECK( entry.alt()[0] == "A" );
+		CHECK( entry.qual() == Approx(29) );
+	}
+
+
 }
