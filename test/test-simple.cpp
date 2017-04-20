@@ -162,9 +162,23 @@ TEST_CASE( "Parsing VCF file with meta data" ) {
 }
 
 TEST_CASE( "Parsing VCF file with wrong format" ) {
-	stringstream stream("Invalid format");
-	DefaultHandler handler;
-	VCFParser parser(stream, handler);
+	TestHandler handler;
 
-	REQUIRE_THROWS_WITH( parser.parse(), Catch::Contains("expecting header") );
+	SECTION( "Missing header" ) {
+		stringstream stream("Invalid format");
+		VCFParser parser(stream, handler);
+
+		REQUIRE_THROWS_WITH( parser.parse(), Catch::Contains("expecting header") );
+	}
+
+	SECTION( "Wrong type" ) {
+		stringstream stream("##INFO=<ID=NS,Number=1,Type=Object,Description=\"Nothing\">\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO");
+		VCFParser parser(stream, handler);
+
+		REQUIRE( parser.parse() );
+		REQUIRE( handler.infoFields.size() == 1 );
+
+		InfoField field = handler.infoFields[0];
+		CHECK_THROWS_WITH( field.type(), Catch::Contains("type") );
+	}
 }
