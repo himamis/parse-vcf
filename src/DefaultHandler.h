@@ -4,6 +4,7 @@
 
 #include "MetaInformation.h"
 #include "SNVEntry.h"
+#include <vector>
 
 namespace parsevcf {
 

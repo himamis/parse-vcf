@@ -5,12 +5,12 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include <map>
 #include "Sample.h"
 
 namespace parsevcf {
 
 struct SNVEntry {
+
 	std::vector<std::string> values;
 
 	std::string chrom() const {

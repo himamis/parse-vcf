@@ -2,7 +2,6 @@
 #include "MetaParser.h"
 
 #include <map>
-
 #include "Common.h"
 #include "MetaInformation.h"
 

@@ -1,10 +1,10 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
-#include <EntryParser.h>
-#include <MetaParser.h>
+#include "VCFParser.h"
+
 #include <sstream>
 #include <string>
-
-#include "VCFParser.h"
+#include "EntryParser.h"
+#include "MetaParser.h"
 
 using namespace std;
 
