@@ -1,9 +1,10 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
-#include "meta_parser.h"
+#include "MetaParser.h"
 
 #include <map>
+
+#include "Common.h"
 #include "MetaInformation.h"
-#include "constants.h"
 
 using namespace std;
 

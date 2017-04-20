@@ -1,14 +1,14 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
-#ifndef PARSER_H_
-#define PARSER_H_
+#ifndef META_PARSER_H_
+#define META_PARSER_H_
 
-#include <istream>
 #include "DefaultHandler.h"
+#include "Lexer.h"
 
 namespace parsevcf {
 
-bool parse(std::istream& input, DefaultHandler& handler);
+bool metaInformation(lexer& input, DefaultHandler& handler);
 
 } /* namespace parsevcf */
 
-#endif /* PARSER_H_ */
+#endif /* META_PARSER_H_ */

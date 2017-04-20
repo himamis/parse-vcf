@@ -1,7 +1,7 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
-#include "entries_parser.h"
+#include <EntryParser.h>
 
-#include "constants.h"
+#include "Common.h"
 
 using namespace std;
 using namespace parsevcf::constants;

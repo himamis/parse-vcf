@@ -3,10 +3,9 @@ CC=g++
 SOURCES = \
 	DefaultHandler.cpp \
 	VCFParser.cpp \
-	meta_parser.cpp \
-	entries_parser.cpp \
-	lexer.cpp \
-	parser.cpp
+	MetaParser.cpp \
+	EntryParser.cpp \
+	Lexer.cpp 
 	
 INCLUDES = \
 	DefaultHandler.h \
@@ -14,11 +13,10 @@ INCLUDES = \
 	Sample.h \
 	SNVEntry.h \
 	VCFParser.h \
-	constants.h \
-	lexer.h \
-	meta_parser.h \
-	entries_parser.h \
-	parser.h \
+	Common.h \
+	Lexer.h \
+	MetaParser.h \
+	EntryParser.h \
 
 TEST_SOURCES = \
 	main.cpp \

@@ -6,7 +6,8 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "constants.h"
+
+#include "Common.h"
 
 namespace parsevcf {
 

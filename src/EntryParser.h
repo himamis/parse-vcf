@@ -2,8 +2,8 @@
 #ifndef ENTRIES_PARSER_H_
 #define ENTRIES_PARSER_H_
 
-#include "lexer.h"
 #include "DefaultHandler.h"
+#include "Lexer.h"
 
 namespace parsevcf {
 

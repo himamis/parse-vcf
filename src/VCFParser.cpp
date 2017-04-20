@@ -1,9 +1,10 @@
 /* This file is part of the parsevcf library (GPL v2 or later), see LICENSE */
+#include <EntryParser.h>
+#include <MetaParser.h>
 #include <sstream>
 #include <string>
 
 #include "VCFParser.h"
-#include "parser.h"
 
 using namespace std;
 
@@ -13,10 +14,25 @@ VCFParser::VCFParser(std::istream& input, DefaultHandler& handler) :
 		_handler(handler), _input(input) {
 }
 
-VCFParser::~VCFParser() { }
+VCFParser::~VCFParser() {
+}
 
 bool VCFParser::parse() {
-	return parsevcf::parse(_input, _handler);
+	lexer lex = lexer(_input);
+	_handler.startDocument();
+
+	metaInformation(lex, _handler);
+	if (!header(lex, _handler)) {
+		error_missing(lex, "header");
+		return false;
+	}
+	if (!entries(lex, _handler)) {
+		error_missing(lex, "entries");
+		return false;
+	}
+
+	_handler.endDocument();
+	return true;
 }
 
 } /* namespace parsevcf */

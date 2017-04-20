@@ -95,7 +95,6 @@ const quality_t unknown = std::numeric_limits<float>::max();
 
 } /* namspace quality */
 
-
 } /* namespace constants */
 
 } /* namespace parsevcf */
