@@ -15,19 +15,19 @@ void DefaultHandler::extraField(const ListEntry& field) { }
 
 void DefaultHandler::extraField(const KeyValueEntry& field) { }
 
-void DefaultHandler::infoField(const InfoField& info_field) { }
+void DefaultHandler::infoField(const InfoField& field) { }
 
-void DefaultHandler::filterField(const FilterField& filter_field) { }
+void DefaultHandler::filterField(const FilterField& field) { }
 
-void DefaultHandler::formatField(const FormatField& format_field) { }
+void DefaultHandler::formatField(const FormatField& field) { }
 
-void DefaultHandler::altField(const AltField& alt_field) { }
+void DefaultHandler::altField(const AltField& field) { }
 
-void DefaultHandler::metaField(const MetaField& meta_field) { }
+void DefaultHandler::metaField(const MetaField& field) { }
 
-void DefaultHandler::sampleField(const SampleField& sample_field) { }
+void DefaultHandler::sampleField(const SampleField& field) { }
 
-void DefaultHandler::contigField(const ContigField& contig_field) { }
+void DefaultHandler::contigField(const ContigField& field) { }
 
 void DefaultHandler::pedigreeField(const PedigreeField& field) { }
 

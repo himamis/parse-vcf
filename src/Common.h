@@ -66,6 +66,11 @@ const std::string assay = "Assay";
 const std::string disease = "Disease";
 const std::string ethnicity = "Ethnicity";
 
+const std::string original = "Original";
+const std::string father = "Father";
+const std::string mother = "Mother";
+const std::string ancestor_name = "Name_";
+
 } /* namespace tokens */
 
 namespace constants {

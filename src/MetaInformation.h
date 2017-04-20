@@ -12,19 +12,15 @@ namespace parsevcf {
 
 struct MetaEntry {
 
-	union {
-		const std::string* single;
-		const std::map<std::string, std::string>* map;
-	} value;
+	std::string line;
+	std::map<std::string, std::string> map;
+
 };
 
 struct KeyValueEntry: public MetaEntry {
 
 	std::string name;
 
-	std::string line() const {
-		return *value.single;
-	}
 };
 
 struct ListEntry: public virtual MetaEntry {
@@ -34,7 +30,18 @@ struct ListEntry: public virtual MetaEntry {
 	}
 
 	std::string value_at(const std::string& key) const {
-		return value.map->at(key);
+		return map.at(key);
+	}
+
+	bool has_key(const std::string& key) const {
+		return map.count(key);
+	}
+
+	std::string value_at_safe(const std::string& key, const std::string& def = "") const {
+		if (has_key(key)) {
+			return value_at(key);
+		}
+		return def;
 	}
 };
 
@@ -164,7 +171,22 @@ struct SampleField: public HasDescription {
 //////////////////
 
 struct PedigreeField: public ListEntry {
-	// TODO
+
+	std::string original() const {
+		return value_at_safe(tokens::original, "");
+	}
+
+	std::string father() const {
+		return value_at_safe(tokens::father, "");
+	}
+
+	std::string mother() const {
+		return value_at_safe(tokens::mother, "");
+	}
+
+	std::string ancestor(const std::string& name) {
+		return value_at_safe(name, "");
+	}
 };
 
 } /* namespace parsevcf */

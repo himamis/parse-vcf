@@ -9,8 +9,6 @@ using namespace std;
 
 namespace parsevcf {
 
-typedef map<string, string> meta_field_list_t;
-
 bool equals(lexer& input) {
 	return next_character(input, '=');
 }
@@ -70,7 +68,7 @@ bool metaValueListValue(lexer& input, string& value) {
 	return true;
 }
 
-bool metaValueListEntry(lexer& input, meta_field_list_t& values) {
+bool metaValueListEntry(lexer& input, map<string, string>& values) {
 	string key;
 	if (!metaValueListKey(input, key)) {
 		return false;
@@ -83,11 +81,13 @@ bool metaValueListEntry(lexer& input, meta_field_list_t& values) {
 		error_missing(input, "meta field list value");
 		return false;
 	}
-	values[key] = value;
+
+	values.insert(std::make_pair(key, value));
+
 	return true;
 }
 
-bool metaValueList(lexer& input, meta_field_list_t& values) {
+bool metaValueList(lexer& input, map<string, string>& values) {
 	first_rule(langle, input)
 
 	if (!metaValueListEntry(input, values)) {
@@ -110,13 +110,13 @@ bool metaValueString(lexer& input, string& ret) {
 	return next_string_until_newline(input, ret);
 }
 
-bool metaValue(lexer& input, meta_field_list_t& values) {
+bool metaValue(lexer& input, map<string, string>& values) {
 	if (!metaValueList(input, values)) {
 		string ret;
 		if (!metaValueString(input, ret)) {
 			return false;
 		}
-		values[ret] = "";
+		values.insert(std::make_pair(ret, ""));
 	}
 	return true;
 }
@@ -126,44 +126,44 @@ void parseMetaEntry(DefaultHandler& handler, const string& key, const map<string
 		handler.fileformat(values.begin()->first);
 	} else if (key == tokens::info) {
 		InfoField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.infoField(field);
 	} else if (key == tokens::format) {
 		FormatField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.formatField(field);
 	} else if (key == tokens::filter) {
 		FilterField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.filterField(field);
 	} else if (key == tokens::alt) {
 		AltField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.altField(field);
 	} else if (key == tokens::contig) {
 		ContigField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.contigField(field);
 	} else if (key == tokens::sample) {
 		SampleField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.sampleField(field);
 	} else if (key == tokens::meta) {
 		MetaField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.metaField(field);
 	} else if (key == tokens::pedigree) {
 		PedigreeField field;
-		field.value.map = &values;
+		field.map = values;
 		handler.pedigreeField(field);
 	} else if (values.begin()->second != "") {
 		ListEntry field;
-		field.value.map = &values;
+		field.map = values;
 		handler.extraField(field);
 	} else {
 		KeyValueEntry field;
 		field.name = key;
-		field.value.single = &(values.begin()->first);
+		field.line = values.begin()->first;
 		handler.extraField(field);
 	}
 }
@@ -177,7 +177,7 @@ bool metaEntry(lexer& input, DefaultHandler& handler) {
 	}
 	rule(equals, input)
 
-	meta_field_list_t values;
+	map<string, string> values;
 	if (!metaValue(input, values)) {
 		error_missing(input, "meta field value");
 		return false;

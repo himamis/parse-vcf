@@ -12,14 +12,24 @@ using namespace std;
 
 class TestHandler: public DefaultHandler {
 public:
-	std::string ff;
-	std::string doc_name;
-
 	bool startDocumentCalled;
 	bool endDocumentCalled;
 
+	vector<string> fileformats;
+
+	vector<ListEntry> listExtraFields;
+	vector<KeyValueEntry> keyvalueExtraFields;
+	vector<InfoField> infoFields;
+	vector<FilterField> filterFields;
+	vector<FormatField> formatFields;
+	vector<AltField> altFields;
+	vector<MetaField> metaFields;
+	vector<SampleField> sampleFields;
+	vector<ContigField> contigFields;
+	vector<PedigreeField> pedigreeFields;
+
 	void fileformat(const std::string& format) {
-		ff = format;
+		fileformats.push_back(format);
 	}
 
 	void startDocument() {
@@ -29,6 +39,53 @@ public:
 	void endDocument() {
 		endDocumentCalled = true;
 	}
+
+	void extraField(const ListEntry& field) {
+		listExtraFields.push_back(field);
+	}
+
+	void extraField(const KeyValueEntry& field) {
+		keyvalueExtraFields.push_back(field);
+	}
+
+	void infoField(const InfoField& field) {
+		infoFields.push_back(field);
+	}
+
+	void filterField(const FilterField& field) {
+		filterFields.push_back(field);
+	}
+
+	void formatField(const FormatField& field) {
+		formatFields.push_back(field);
+	}
+
+	void altField(const AltField& field) {
+		altFields.push_back(field);
+	}
+
+	void metaField(const MetaField& field) {
+		metaFields.push_back(field);
+	}
+
+	void sampleField(const SampleField& field) {
+		sampleFields.push_back(field);
+	}
+
+	void contigField(const ContigField& field) {
+		contigFields.push_back(field);
+	}
+
+	void pedigreeField(const PedigreeField& field) {
+		pedigreeFields.push_back(field);
+	}
+
+	void sampleNames(const std::vector<std::string>& names) {
+
+	}
+
+	void entry(const SNVEntry& entry) { }
+
 };
 
 TEST_CASE( "Minimal test case" ) {
@@ -46,7 +103,34 @@ TEST_CASE( "Parsing a simple VCF file" ) {
 	VCFParser parser = VCFParser(input, handler);
 	REQUIRE( parser.parse() );
 
-	CHECK( handler.ff == "VCFv4.0" );
+	CHECK( handler.fileformats.size() == 1 );
+	CHECK( handler.fileformats[0] == "VCFv4.0" );
 	CHECK( handler.startDocumentCalled );
 	CHECK( handler.endDocumentCalled );
+}
+
+TEST_CASE( "Parsing VCF file with meta data" ) {
+	ifstream input;
+	input.open("test/examples/test-meta.vcf", ifstream::in);
+	TestHandler handler;
+
+	VCFParser parser = VCFParser(input, handler);
+	REQUIRE( parser.parse() );
+
+	SECTION( "Parsing key value pairs" ) {
+		REQUIRE( handler.keyvalueExtraFields.size() == 4 );
+
+		string keys[] = {"fileDate", "source", "reference", "phasing"};
+		string values[] = {"20090805", "myImputationProgramV3.1", "1000GenomesPilot-NCBI36", "partial"};
+
+		for (unsigned i = 0; i < 4; i++) {
+			KeyValueEntry entry = handler.keyvalueExtraFields[i];
+			CHECK( entry.name == keys[i] );
+			CHECK( entry.line == values[i] );
+		}
+	}
+
+	SECTION( "Parsing info fields" ) {
+		REQUIRE( handler.infoFields.size() == 3);
+	}
 }

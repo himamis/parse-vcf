@@ -1,0 +1,12 @@
+##fileformat=VCFv4.1
+##fileDate=20090805
+##source=myImputationProgramV3.1
+##reference=1000GenomesPilot-NCBI36
+##phasing=partial
+##INFO=<ID=NS,Number=1,Type=Integer,Description="Number of Samples With Data">
+##INFO=<ID=AF,Number=G,Type=Float,Description="Allele Frequency">
+##INFO=<ID=H2,Number=0,Type=Flag,Description="HapMap2 membership">
+##FILTER=<ID=q10,Description="Quality below 10">
+##FORMAT=<ID=HQ,Number=2,Type=Integer,Description="Haplotype Quality">
+##PEDIGREE=<ID=TumourSample,Original=GermlineID>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
