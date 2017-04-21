@@ -11,7 +11,6 @@ SOURCES = \
 INCLUDES = \
 	DefaultHandler.h \
 	MetaInformation.h \
-	Sample.h \
 	SNVEntry.h \
 	VCFParser.h \
 	Common.h \

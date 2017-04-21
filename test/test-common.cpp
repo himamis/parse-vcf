@@ -4,6 +4,7 @@
 #include "Common.h"
 
 using namespace std;
+using namespace parsevcf;
 
 TEST_CASE( "tokenize simple" ) {
 	vector<string> ret = parsevcf::tokenize("12:23:34", ':');

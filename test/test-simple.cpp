@@ -4,6 +4,7 @@
 #include "MetaInformation.h"
 #include "VCFParser.h"
 #include "DefaultHandler.h"
+#include "Common.h"
 #include <iostream>
 #include <fstream>
 
@@ -227,5 +228,5 @@ TEST_CASE( "Samples" ) {
 		CHECK( data[2] == "1" );
 		CHECK( data[3] == "51,51" );
 	}
-
 }
+

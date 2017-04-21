@@ -5,9 +5,17 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include "Sample.h"
 
 namespace parsevcf {
+
+struct Sample {
+
+	std::string value;
+
+	std::vector<std::string> data() const {
+		return tokenize(value, ':');
+	}
+};
 
 struct SNVEntry {
 
@@ -47,12 +55,16 @@ struct SNVEntry {
 	std::vector<std::pair<std::string, std::string> > info() const {
 		std::vector<std::pair<std::string, std::string> > ret;
 		std::vector<std::string> pairs = tokenize(values[7], ';');
-		for(std::vector<std::string>::iterator it = pairs.begin(); it != pairs.end(); ++it) {
+		for (std::vector<std::string>::iterator it = pairs.begin();
+				it != pairs.end(); ++it) {
 			std::vector<std::string> keyvalue = tokenize(*it, '=');
 			if (keyvalue.size() == 1) {
-				ret.push_back(std::pair<std::string, std::string>(keyvalue[0], ""));
+				ret.push_back(
+						std::pair<std::string, std::string>(keyvalue[0], ""));
 			} else if (keyvalue.size() == 2) {
-				ret.push_back(std::pair<std::string, std::string>(keyvalue[0], keyvalue[1]));
+				ret.push_back(
+						std::pair<std::string, std::string>(keyvalue[0],
+								keyvalue[1]));
 			} else {
 				// error
 			}
@@ -66,7 +78,7 @@ struct SNVEntry {
 
 	std::vector<Sample> samples() const {
 		std::vector<Sample> sample;
-		for(unsigned i = 9; i < values.size(); i++) {
+		for (unsigned i = 9; i < values.size(); i++) {
 			Sample s;
 			s.value = values[i];
 			sample.push_back(s);
